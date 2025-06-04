@@ -37,15 +37,16 @@ A robust Node.js backend microservice built with NestJS that handles authenticat
 
 1. **Clone the repository**
 
-````bash
+```bash
 git clone https://github.com/muthuthevar/billeasy-assessment.git || git clone git@github.com:muthuthevar/billeasy-assessment.git
 cd billeasy-assessment
+```
 
 2. **Install dependencies**
 
 ```bash
 pnpm install
-````
+```
 
 3. **Set up environment variables**
 
