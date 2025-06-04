@@ -29,11 +29,11 @@ A robust Node.js backend microservice built with NestJS that handles authenticat
 - Node.js (>=18)
 - PostgreSQL
 - Redis
-- npm or yarn
+- npm or yarn or pnpm
 
 ## Installation
 
-### Option 1: Local Setup
+### Local Setup
 
 1. **Clone the repository**
 
@@ -67,22 +67,6 @@ docker run --name redis -p 6379:6379 -d redis:7-alpine
 
 ```bash
 npm run start:dev
-```
-
-### Option 2: Docker Compose
-
-1. **Clone and configure**
-
-```bash
-git clone <repository-url>
-cd secure-file-upload-service
-cp .env.example .env
-```
-
-2. **Start all services**
-
-```bash
-docker-compose up -d
 ```
 
 ## API Documentation
