@@ -169,3 +169,79 @@ Response:
 curl -X GET "http://localhost:3000/files?page=1&limit=10" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
+
+### Database Schema
+
+#### Users
+
+| Column     | Type   | Description                                   |
+| ---------- | ------ | --------------------------------------------- |
+| id         | number | Primary key (auto-increment)                  |
+| email      | string | Unique user email                             |
+| password   | string | Hashed password (excluded from serialization) |
+| created_at | Date   | Timestamp of user creation                    |
+| updated_at | Date   | Timestamp of last update                      |
+
+Relations:
+
+One-to-many with File (a user can upload multiple files)
+
+#### Files
+
+| Column            | Type   | Description                                          |
+| ----------------- | ------ | ---------------------------------------------------- |
+| id                | number | Primary key (auto-increment)                         |
+| user_id           | number | Foreign key to User                                  |
+| original_filename | string | Original name of the uploaded file                   |
+| storage_path      | string | Path in storage (nullable)                           |
+| title             | string | Custom title (nullable)                              |
+| description       | text   | File description (nullable)                          |
+| status            | enum   | File status: uploaded, processing, processed, failed |
+| extracted_data    | text   | Parsed data from file (nullable)                     |
+| uploaded_at       | Date   | File upload timestamp                                |
+| created_at        | Date   | Record creation timestamp                            |
+| updated_at        | Date   | Record update timestamp                              |
+
+Relations:
+
+Many-to-one with User (on user_id)
+
+One-to-many with Job (a file can have multiple jobs)
+
+#### Jobs
+
+| Column        | Type   | Description                                       |
+| ------------- | ------ | ------------------------------------------------- |
+| id            | number | Primary key (auto-increment)                      |
+| file_id       | number | Foreign key to File                               |
+| job_type      | enum   | Type of job. Current option: file_processing      |
+| status        | enum   | Job status: queued, processing, completed, failed |
+| error_message | text   | Error description if job fails (nullable)         |
+| started_at    | Date   | Timestamp when job started (nullable)             |
+| completed_at  | Date   | Timestamp when job completed (nullable)           |
+| created_at    | Date   | Job creation timestamp                            |
+| updated_at    | Date   | Job update timestamp                              |
+
+Relations:
+
+Many-to-one with File (on file_id)
+
+### Enums
+
+#### FileStatus
+
+- uploaded
+- processing
+- processed
+- failed
+
+#### JobStatus
+
+- queued
+- processing
+- completed
+- failed
+
+#### JobType
+
+- file_processing
